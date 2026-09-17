@@ -1,0 +1,60 @@
+# HISTORY — the classic "life story" of a snowflake, after snowcrystals.com:
+#
+#   1. It is born high in the cloud where the air is only slightly
+#      supersaturated: a small, thick hexagonal plate grows slowly (faceting).
+#   2. It falls into the humid heart of the cloud, well above water
+#      saturation at -15 °C: the corners sprout fast dendritic arms (branching).
+#   3. It drifts into drier air near the cloud base: the arm tips slow down
+#      and broaden into plates, and the sidebranches fill in to ridges.
+#
+# All six arms share the same history, so they match — but a crystal that
+# followed a slightly different path would look completely different.
+#
+# Timings are real: ten minutes of slow plate growth (~0.1 µm/s), two and a
+# half minutes of dendritic growth at ~1.5 µm/s, then three minutes in
+# drier air.
+#
+# Nothing here is looked up in a morphology diagram: the vapour field is
+# solved with the mixed boundary condition X0 dsigma/dn = alpha sigma, every
+# surface site grows at alpha v_kin sigma_surf with the CAK attachment
+# coefficient alpha = A exp(-sigma0_eff / sigma_surf), basal faces the same
+# way, and time is real seconds.
+
+[simulation]
+radius = 1100
+cell_size_um = 0.5
+
+[output]
+frames = 80
+frame_delay_ms = 60
+iso = "01_story_flake.iso.png"
+
+[[history]]
+time = 0
+temperature = -14
+supersaturation = 0.08
+
+[[history]]
+time = 600
+temperature = -15
+supersaturation = 0.1
+
+[[history]]
+time = 630
+temperature = -15
+supersaturation = 0.3
+
+[[history]]
+time = 780
+temperature = -15
+supersaturation = 0.3
+
+[[history]]
+time = 810
+temperature = -13
+supersaturation = 0.12
+
+[[history]]
+time = 1000
+temperature = -12
+supersaturation = 0.12

@@ -1,0 +1,42 @@
+# HISTORY — a stellar dendrite that drops through the column regime.
+#
+# It starts at -15 °C as a dendrite, then falls through air near -5 °C where
+# the basal SDAK dip sends growth into the c-axis and the outline almost
+# stops, then returns to -15 °C and keeps branching.  Watch the pause in the
+# animation and the thickened core in the relief view.
+
+[simulation]
+radius = 900
+cell_size_um = 0.5
+[output]
+iso = "02_column_pause.iso.png"
+
+[[history]]
+time = 0
+temperature = -15
+supersaturation = 0.3
+
+[[history]]
+time = 120
+temperature = -15
+supersaturation = 0.3
+
+[[history]]
+time = 150
+temperature = -5.5
+supersaturation = 0.15
+
+[[history]]
+time = 450
+temperature = -5.5
+supersaturation = 0.15
+
+[[history]]
+time = 480
+temperature = -15
+supersaturation = 0.3
+
+[[history]]
+time = 580
+temperature = -15
+supersaturation = 0.3

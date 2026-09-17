@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>flakesim — grow a snow crystal</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>flakesim</h1>
+  <p>Grow a snow crystal from the environment it falls through — Libbrecht's attachment kinetics on a
+  three-dimensional vapour field, running here in WebAssembly. Pick a history, press <b>Grow</b>, and watch.</p>
+</header>
+
+<main>
+  <section class="controls">
+    <label>History
+      <select id="preset"></select>
+    </label>
+    <label>Cell size
+      <select id="cell">
+        <option value="1">1 µm (default)</option>
+        <option value="2">2 µm (4× faster, coarser)</option>
+        <option value="0.5">0.5 µm (slow in a browser)</option>
+      </select>
+    </label>
+    <label>Lattice radius
+      <select id="radius">
+        <option value="100">100 cells</option>
+        <option value="150" selected>150 cells</option>
+        <option value="200">200 cells</option>
+        <option value="300">300 cells</option>
+      </select>
+    </label>
+    <label>Growth model
+      <select id="growth">
+        <option value="poisson">Poisson (stochastic)</option>
+        <option value="quantised">Quantised (deterministic)</option>
+      </select>
+    </label>
+    <button id="run">Grow</button>
+    <button id="stop" disabled>Stop</button>
+  </section>
+
+  <details>
+    <summary>History file (editable)</summary>
+    <textarea id="toml" rows="18" spellcheck="false"></textarea>
+    <p class="hint">The <code>[simulation]</code> radius, cell size and growth model above override the file's when you press Grow.
+    Keyframes are <code>[[history]]</code> tables with <code>time</code> (s), <code>temperature</code> (°C) and
+    <code>supersaturation</code> (g/m³ over ice) or <code>humidity</code> (% over water); <code>pressure</code> (hPa) is optional.</p>
+  </details>
+
+  <section class="status" id="status">Ready.</section>
+
+  <section class="views">
+    <figure>
+      <canvas id="top" width="512" height="512"></canvas>
+      <figcaption>From above</figcaption>
+    </figure>
+    <figure>
+      <canvas id="iso" width="512" height="360"></canvas>
+      <figcaption>Relief view</figcaption>
+    </figure>
+  </section>
+
+  <section class="charts">
+    <h2>The morphology diagram, grown</h2>
+    <p>Forty-eight crystals grown for ten minutes each under constant conditions (0.5 µm cells, 300 µm across),
+    laid out like the Nakaya diagram: warm on the left, humid on top. Each cell shows the crystal from above and
+    in relief. These are pre-rendered — the full chart takes a couple of hours on a 64-core machine.</p>
+    <h3>Poisson model</h3>
+    <img src="docs/morphology_chart.png" alt="Morphology chart, Poisson growth model">
+    <h3>Quantised model</h3>
+    <img src="docs/morphology_chart_quantised.png" alt="Morphology chart, quantised growth model">
+  </section>
+
+  <footer>
+    <p>Physics after Kenneth Libbrecht, <a href="https://www.snowcrystals.com">snowcrystals.com</a> and
+    <a href="https://arxiv.org/abs/1910.06389"><i>Snow Crystals</i></a>. The simulator's README describes the model.</p>
+  </footer>
+</main>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

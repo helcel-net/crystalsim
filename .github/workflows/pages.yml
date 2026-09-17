@@ -1,0 +1,72 @@
+# Build the simulator for WebAssembly and publish the interactive page
+# (with the pre-rendered charts from docs/) to GitHub Pages.
+#
+# Enable Pages for the repository with "GitHub Actions" as the source
+# (Settings → Pages → Build and deployment → Source).
+name: pages
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Rust toolchain with the wasm32 target
+        run: |
+          rustup update stable
+          rustup default stable
+          rustup target add wasm32-unknown-unknown
+
+      - name: Cache cargo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Test the native build
+        run: cargo test --release
+
+      - name: Install wasm-pack
+        run: curl -sSfL https://rustwasm.github.io/wasm-pack/installer/init.sh | sh
+
+      - name: Build the WebAssembly package
+        run: wasm-pack build --target web --release --out-dir web/pkg --no-default-features --features wasm
+
+      - name: Assemble the site
+        run: |
+          rm -f web/pkg/.gitignore web/pkg/README.md web/pkg/package.json
+          mkdir -p web/docs
+          cp docs/*.png web/docs/
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: web
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

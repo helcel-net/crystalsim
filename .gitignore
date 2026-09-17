@@ -1,0 +1,8 @@
+/target
+/out
+*.svg
+*.gif
+*.png
+!docs/*.png
+/web/pkg
+/web/docs

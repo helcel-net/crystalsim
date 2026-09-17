@@ -1,0 +1,59 @@
+# HISTORY — faceting and branching taking turns.
+#
+# Alternating humid and dry air at -15 °C: each humid spell sprouts branches,
+# each dry spell lets faceting broaden the tips into plates.  The result is a
+# stellar crystal whose arms carry plates part-way along — a common look in
+# real snowfall, and a record of the crystal's path through the cloud.
+
+[simulation]
+radius = 1000
+cell_size_um = 0.5
+[[history]]
+time = 0
+temperature = -15
+supersaturation = 0.12
+
+[[history]]
+time = 200
+temperature = -15
+supersaturation = 0.12
+
+[[history]]
+time = 215
+temperature = -15
+supersaturation = 0.3
+
+[[history]]
+time = 305
+temperature = -15
+supersaturation = 0.3
+
+[[history]]
+time = 320
+temperature = -15
+supersaturation = 0.1
+
+[[history]]
+time = 440
+temperature = -15
+supersaturation = 0.1
+
+[[history]]
+time = 455
+temperature = -15
+supersaturation = 0.3
+
+[[history]]
+time = 545
+temperature = -15
+supersaturation = 0.3
+
+[[history]]
+time = 560
+temperature = -15
+supersaturation = 0.11
+
+[[history]]
+time = 660
+temperature = -15
+supersaturation = 0.11
